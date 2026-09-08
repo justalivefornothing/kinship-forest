@@ -52,9 +52,9 @@ SVG `transform` so a change in layout automatically animates.
 
 ## Milestones
 
-- [ ] M1: plan, license, scaffold (vite + react-ts + tailwind v4 + vitest)
-- [ ] M2: core `UnionFind`, `kruskal`, `Percolation` + tests green
-- [ ] M3: forest view with union/find animations and strategy toggles
-- [ ] M4: Kruskal and percolation modes
-- [ ] M5: stats, script input, polish, responsive pass, smoke test, README
-- [ ] M6: publish to private GitHub repo
+- [x] M1: plan, license, scaffold (vite + react-ts + tailwind v4 + vitest)
+- [x] M2: core `UnionFind`, `kruskal`, `Percolation` + tests green
+- [x] M3: forest view with union/find animations and strategy toggles
+- [x] M4: Kruskal and percolation modes
+- [x] M5: stats, script input, polish, responsive pass, smoke test, README
+- [x] M6: publish to private GitHub repo
