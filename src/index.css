@@ -1,0 +1,151 @@
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/700.css';
+@import '@fontsource/outfit/800.css';
+@import '@fontsource/dm-mono/400.css';
+@import '@fontsource/dm-mono/500.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  --color-paper: #f6efe4;
+  --color-paper-2: #efe5d4;
+  --color-paper-3: #e4d7c2;
+  --color-ink: #2b2620;
+  --color-ink-2: #6b5f52;
+  --color-ink-3: #9c8d7c;
+
+  --color-terracotta: #c9603f;
+  --color-terracotta-2: #a94b2e;
+  --color-ochre: #d9a441;
+  --color-ochre-2: #b8862b;
+  --color-slate: #5a6b7a;
+  --color-slate-2: #42505c;
+  --color-moss: #6f8f5a;
+  --color-moss-2: #557344;
+
+  --shadow-cut: 0 2px 0 0 rgb(43 38 32 / 0.16), 0 6px 14px -4px rgb(43 38 32 / 0.28);
+  --shadow-cut-sm: 0 1px 0 0 rgb(43 38 32 / 0.14), 0 3px 8px -3px rgb(43 38 32 / 0.22);
+  --shadow-cut-inset: inset 0 2px 0 0 rgb(43 38 32 / 0.08);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgb(217 164 65 / 0.14), transparent 55%),
+      radial-gradient(ellipse at 90% 100%, rgb(201 96 63 / 0.1), transparent 50%);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ochre);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@utility smallcaps {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+}
+
+@utility paper-card {
+  background: color-mix(in oklab, var(--color-paper) 70%, white);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-cut);
+}
+
+/* Forest node motion: translate is animated so layout changes glide. */
+.uf-node {
+  transition: transform 520ms cubic-bezier(0.22, 1.1, 0.36, 1);
+  will-change: transform;
+}
+.uf-edge {
+  transition:
+    d 520ms cubic-bezier(0.22, 1.1, 0.36, 1),
+    stroke 200ms ease,
+    opacity 200ms ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+.edge-shake {
+  animation: shake 420ms ease-in-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 0 rgb(217 164 65 / 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgb(217 164 65 / 0.9));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgb(217 164 65 / 0.4));
+  }
+}
+.edge-glow {
+  animation: glow 700ms ease-out;
+}
+
+@keyframes arc-in {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+.arc-in {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: arc-in 480ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uf-node,
+  .uf-edge {
+    transition: none;
+  }
+  .edge-shake,
+  .edge-glow,
+  .arc-in {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
