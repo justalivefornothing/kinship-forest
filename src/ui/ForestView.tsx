@@ -34,8 +34,12 @@ export function ForestView({ forest }: { forest: Forest }) {
 
   const px = (col: number) => PAD + col * CELL_W + CELL_W / 2
   const py = (row: number) => PAD + 14 + row * CELL_H + CELL_H / 2
-  const width = PAD * 2 + Math.max(layout.cols, 3) * CELL_W
-  const height = PAD * 2 + 14 + Math.max(layout.rows, 2) * CELL_H
+  // While a collapse plays, keep the frame large enough for both the old and
+  // new shapes so the nodes visibly slide instead of the whole picture rescaling.
+  const frameCols = Math.max(layout.cols, beforeLayout?.cols ?? 0, 3)
+  const frameRows = Math.max(layout.rows, beforeLayout?.rows ?? 0, 2)
+  const width = PAD * 2 + frameCols * CELL_W
+  const height = PAD * 2 + 14 + frameRows * CELL_H
 
   const walk = anim.kind === 'walk' ? new Set(anim.path.slice(0, anim.step)) : null
   const walkHead = anim.kind === 'walk' ? anim.path[anim.step - 1] : -1
@@ -122,6 +126,7 @@ export function ForestView({ forest }: { forest: Forest }) {
             {isRoot && (
               <text y={-NODE / 2 - 7} textAnchor="middle" className="smallcaps fill-ink-2 text-[11px] font-bold">
                 root
+                {badge && <tspan className="fill-ink-3 font-mono font-medium"> · {badge}</tspan>}
               </text>
             )}
             <rect
@@ -146,11 +151,6 @@ export function ForestView({ forest }: { forest: Forest }) {
             <text y={6} textAnchor="middle" className="pointer-events-none fill-paper font-display text-[17px] font-extrabold">
               {i}
             </text>
-            {badge && (
-              <text y={NODE / 2 + 15} textAnchor="middle" className="smallcaps fill-ink-2 font-mono text-[10.5px]">
-                {badge}
-              </text>
-            )}
           </g>
         )
       })}

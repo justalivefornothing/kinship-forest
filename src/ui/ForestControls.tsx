@@ -17,7 +17,7 @@ const COMPRESSION = [
 
 export function ForestControls({ forest }: { forest: Forest }) {
   const { n, busy, selected, strategy, compression } = forest
-  const [script, setScript] = useState('u 8 9; u 7 8; u 0 7   # chain 9 → 8 → 7 → 0\nf 9                    # then flatten it')
+  const [script, setScript] = useState('u 8 9; u 7 8; u 0 7  # chain 9→8→7→0\nf 9  # then flatten it')
   const [errors, setErrors] = useState<string[]>([])
   const [a, b] = selected as [number?, number?]
   const pair = (kind: 'union' | 'connected') => () => {

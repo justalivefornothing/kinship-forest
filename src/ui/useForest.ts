@@ -167,7 +167,7 @@ export function useForest() {
   )
 
   const replace = useCallback(
-    (uf: UnionFind, note: string) => {
+    (uf: UnionFind, note: string, select: number[] = []) => {
       clearTimers()
       queue.current = []
       applyStrategy(uf, strategy, compression)
@@ -175,7 +175,7 @@ export function useForest() {
       setNState(uf.n)
       setAnim({ kind: 'idle' })
       setRecent([])
-      setSelected([])
+      setSelected(select)
       busyRef.current = false
       setBusy(false)
       setSnap(snapshotOf(uf))
@@ -185,8 +185,9 @@ export function useForest() {
   )
 
   const reset = useCallback((size = n) => replace(new UnionFind(size), `reset to ${size} singleton sets`), [n, replace])
+  // The deepest node is pre-selected so "Find" is one click away from the collapse.
   const buildChain = useCallback(
-    () => replace(chainOf(n), `built a chain ${n - 1} → … → 0 — now find(${n - 1})`),
+    () => replace(chainOf(n), `built a chain ${n - 1} → … → 0 — now find(${n - 1})`, [n - 1]),
     [n, replace],
   )
   const randomize = useCallback(() => {
